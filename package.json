@@ -1,0 +1,13 @@
+{
+  "name": "trombenext-backend",
+  "version": "0.1.0",
+  "main": "index.js",
+  "repository": "git@github.com:BeNextCo/trombenext-backend.git",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.1"
+  },
+  "scripts": {
+    "start": "node index.js"
+  }
+}
