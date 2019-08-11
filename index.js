@@ -1,6 +1,7 @@
 const express = require('express')
 const cors = require('cors')
 const app = express()
+const port = process.env.PORT || 8080;
 
 app.use(cors());
 
@@ -9,6 +10,6 @@ app.get('/', function (req, res) {
   res.send('Hello world from API!')
 })
 
-app.listen(5000, function () {
-  console.log('Example app listening on port 5000!')
+app.listen(port, function () {
+  console.log(`App is running on port ${port}`)
 })
