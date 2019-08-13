@@ -13,7 +13,7 @@ router.put('/profile', function(req, res) {
   })
   newProfile.save((err, profile) => {
     if (err || !profile) {
-      res.sendStatus(400).send('Error : cannot add new profile')
+      res.status(400).send(`Error adding new profile : ${err}`)
     } else {
       res.status(201).send(String(profile.id))
     }
@@ -21,16 +21,18 @@ router.put('/profile', function(req, res) {
 })
 
 router.get('/profile/:id', async function(req, res) {
-  MongoProfile.findOne({ id: req.params.id }, (err, profile) => {
-    if (err || !profile) return res.sendStatus(404)
+  MongoProfile.findOne({ _id: req.params.id }, (err, profile) => {
+    if (err || !profile)
+      return res.status(404).send(`Cannot find profile : ${err}`)
     return res.json(profile)
   })
 })
 
 router.get('/profiles', async function(req, res) {
   MongoProfile.find((err, profiles) => {
-    if (err || !profile) return res.sendStatus(404)
-    return res.json(profile)
+    if (err || !profiles)
+      return res.status(404).send(`Cannot find profiles : ${err}`)
+    return res.json(profiles)
   })
 })
 

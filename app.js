@@ -11,8 +11,6 @@ if (env === 'development') {
 const port = process.env.PORT || 5000
 const dbUri = process.env.DB_URI
 
-console.log(dbUri)
-
 app.use(cors())
 app.use(bodyParser.json())
 app.use(router)
