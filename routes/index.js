@@ -17,9 +17,17 @@ router.put('/profile', function (req, res) {
   })
 })
 
-router.get('/profile', async function (req, res) {
-  MongoProfile.findOne({ first_name: 'Baptiste' },
+router.get('/profile/:id', async function (req, res) {
+  MongoProfile.findOne({ id: req.params.id },
     (err, profile) => {
+      if (err || !profile) return res.sendStatus(404)
+      return res.json(profile)
+    })
+})
+
+router.get('/profiles', async function (req, res) {
+  MongoProfile.find(
+    (err, profiles) => {
       if (err || !profile) return res.sendStatus(404)
       return res.json(profile)
     })
