@@ -8,21 +8,22 @@ const env = process.env.NODE_ENV
 if (env === 'development') {
   require('dotenv').config()
 }
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 5000
 const dbUri = process.env.DB_URI
 
-console.log(dbUri);
+console.log(dbUri)
 
-app.use(cors());
-app.use(bodyParser.json());
+app.use(cors())
+app.use(bodyParser.json())
 app.use(router)
 
-mongoose.connect(dbUri, { useNewUrlParser: true })
+mongoose
+  .connect(dbUri, { useNewUrlParser: true })
   .then(() => {
-    app.listen(port, function () {
+    app.listen(port, function() {
       console.log(`App is running on port ${port}`)
     })
   })
-  .catch((err) => {
+  .catch(err => {
     console.log(`Error connecting to database, ${err}`)
   })
