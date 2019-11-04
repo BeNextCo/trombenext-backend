@@ -4,7 +4,7 @@ const mongoose = require('mongoose')
 const bodyParser = require('body-parser')
 const router = require('./routes')
 const app = express()
-const env = process.env.NODE_ENV
+const env = process.env.NODE_ENV || 'development'
 if (env === 'development') {
   require('dotenv').config()
 }
