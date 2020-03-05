@@ -1,13 +1,12 @@
 const router = require('express').Router()
 const MongoProfile = require('../src/model/profile')
-const checkAuth = require('./auth')
+const {retrieveTokenInfo} = require('../middlewares/auth')
 
 router.get('/', (req, res) => {
   res.send('Hello world from API!')
 })
 
 router.put('/profile', async (req, res) => {
-  await checkAuth(req, res)
   const newProfile = new MongoProfile({
     first_name: req.body.first_name,
     last_name: req.body.last_name,
@@ -23,7 +22,6 @@ router.put('/profile', async (req, res) => {
 })
 
 router.get('/profile/:id', async (req, res) => {
-  await checkAuth(req, res)
   MongoProfile.findOne({ _id: req.params.id }, (err, profile) => {
     if (err || !profile)
       return res.status(404).send(`Cannot find profile : ${err}`)
@@ -32,7 +30,6 @@ router.get('/profile/:id', async (req, res) => {
 })
 
 router.get('/profiles', async (req, res) => {
-  await checkAuth(req, res)
   MongoProfile.find((err, profiles) => {
     if (err || !profiles)
       return res.status(404).send(`Cannot find profiles : ${err}`)
@@ -41,7 +38,9 @@ router.get('/profiles', async (req, res) => {
 })
 
 router.get('/login', async (req, res) => {
-  await checkAuth(req, res)
+  const [,requestToken] = req.headers['authorization'].split(' ')
+  const user = await retrieveTokenInfo(requestToken)
+  res.status(200).json(user)
 })
 
 module.exports = router
