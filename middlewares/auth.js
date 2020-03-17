@@ -10,9 +10,10 @@ const authenticate = async (req, res, next)=> {
   }
 }
 const checkAuth = async (req)=> {
-  if (req.headers['authorization'] === undefined) throw 'authorization header is missing'
+  const authorization = req.headers['authorization'];
+  if (authorization === undefined) throw 'authorization header is missing'
   
-  const [,requestToken] = req.headers['authorization'].split(' ')
+  const [,requestToken] = authorization.split(' ')
 
   if (requestToken === undefined) throw 'token not found'
 
